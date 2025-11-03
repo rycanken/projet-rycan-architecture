@@ -141,6 +141,11 @@ public class VueWesnothForBattle extends Vue {
 		Button actionChoisirWhiteMage = (Button)lookup("#action-choisir-whiteMage");
 		actionChoisirWhiteMage.setOnAction(new SelecteurDeHero(this.controleur, HEROES.WHITEMAGE));
 		
+		
+		
+		
+		
+		
 		Button actionChoisirWraith = (Button)lookup("#action-choisir-wraith");
 		actionChoisirWraith.setOnAction(new SelecteurDeMonstre(this.controleur, MONSTRES.WRAITH));
 		

@@ -3,6 +3,9 @@ package controleur;
 import com.sun.media.jfxmedia.logging.Logger;
 
 import architecture.Controleur;
+import controleur.commande.CommandeChoisirChampBataille;
+import controleur.commande.Commande;
+import controleur.commande.CommandeDeployerPersonnage;
 import donnee.Exporteur;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -44,16 +47,18 @@ public class ControleurWesnothForBattle extends Controleur{
 	}
 
 	public void notifierClicChamp(double x, double y) {
-		HeroDeBataille nouveauHero = new HeroDeBataille(this.heroChoisie, x, y);
-		this.heroes.getHero().add(nouveauHero);
-		VueWesnothForBattle.getInstance().PlacerChampHeroes(this.heroChoisie,x,y);
+		Commande commande = new CommandeDeployerPersonnage(heroChoisie,x,y,this.heroes);
+		commande.executer();
+		
+		
 		Monstre monstre = new Monstre(this.monstreChoisit, x, y);
 		VueWesnothForBattle.getInstance().PlacerChampMonstre(monstreChoisit, x, y);
 	}
-	public void notifierChangerChamp(TERRAINS bataille) {
+	public void notifierChangerChamp(TERRAINS terreainChoisie) {
 		
-		this.heroes.setBataille(new ChampDeBataille(bataille));
-		VueWesnothForBattle.getInstance().afficherBataille(bataille);
+		Commande commande = new CommandeChoisirChampBataille(terrainChoisie, this.heroes);
+		commande.executer();
+		
 	}
 /*
 	public void notifierClicDuelist() {
