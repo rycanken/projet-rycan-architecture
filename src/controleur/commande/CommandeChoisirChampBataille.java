@@ -7,8 +7,8 @@ import vue.VueWesnothForBattle;
 
 public class CommandeChoisirChampBataille extends Commande {
 
-	Heroes heroes;
-	TERRAINS champ;
+	protected Heroes heroes;
+	protected TERRAINS champ;
 	
 	public CommandeChoisirChampBataille(TERRAINS champ, Heroes heroes) {
 		this.heroes=heroes;

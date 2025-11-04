@@ -54,9 +54,9 @@ public class ControleurWesnothForBattle extends Controleur{
 		Monstre monstre = new Monstre(this.monstreChoisit, x, y);
 		VueWesnothForBattle.getInstance().PlacerChampMonstre(monstreChoisit, x, y);
 	}
-	public void notifierChangerChamp(TERRAINS terreainChoisie) {
+	public void notifierChangerChamp(TERRAINS terrain) {
 		
-		Commande commande = new CommandeChoisirChampBataille(terrainChoisie, this.heroes);
+		Commande commande = new CommandeChoisirChampBataille(terrain, this.heroes);
 		commande.executer();
 		
 	}
