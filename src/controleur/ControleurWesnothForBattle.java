@@ -1,5 +1,7 @@
 package controleur;
 
+import java.util.Stack;
+
 import com.sun.media.jfxmedia.logging.Logger;
 
 import architecture.Controleur;
@@ -45,11 +47,12 @@ public class ControleurWesnothForBattle extends Controleur{
 		this.heroChoisie = HEROES.DRAKAN;
 		
 	}
-
+	protected Stack<Commande> historique = new Stack<Commande>();
+	
 	public void notifierClicChamp(double x, double y) {
 		Commande commande = new CommandeDeployerPersonnage(heroChoisie,x,y,this.heroes);
 		commande.executer();
-		
+		historique.add(commande);
 		
 		Monstre monstre = new Monstre(this.monstreChoisit, x, y);
 		VueWesnothForBattle.getInstance().PlacerChampMonstre(monstreChoisit, x, y);
@@ -58,7 +61,7 @@ public class ControleurWesnothForBattle extends Controleur{
 		
 		Commande commande = new CommandeChoisirChampBataille(terrain, this.heroes);
 		commande.executer();
-		
+		historique.add(commande);
 	}
 /*
 	public void notifierClicDuelist() {
@@ -126,6 +129,27 @@ public class ControleurWesnothForBattle extends Controleur{
 		System.out.println("Yo save name");
 		this.nomBataille = text;
 		this.heroes.setNomChoisie(new NomBataille(nomBataille));
+	}
+
+
+	public void notifierActionUndo() {
+		if(!historique.isEmpty()) {
+			Commande commande = historique.pop();
+			commande.annuler();
+			annulations.add(commande);
+		}
+		
+		
+	}
+	protected Stack<Commande> annulations = new Stack<Commande>();
+
+	public void notifierActionRedo() {
+		if(!annulations.isEmpty()) {
+			Commande commande = annulations.pop();
+			commande.executer();
+			historique.add(commande);
+		}
+		
 	}
 
 

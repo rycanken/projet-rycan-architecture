@@ -12,7 +12,7 @@ public class Heroes implements Exportable {
 	protected NomBataille nom = null;
 	
 	public Heroes() {
-		
+		this.bataille = new ChampDeBataille(TERRAINS.PLAINE);
 	}
 	public List<HeroDeBataille> getHero(){
 		return heroes;

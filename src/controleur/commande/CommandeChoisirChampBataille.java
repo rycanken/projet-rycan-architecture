@@ -9,7 +9,7 @@ public class CommandeChoisirChampBataille extends Commande {
 
 	protected Heroes heroes;
 	protected TERRAINS champ;
-	
+	protected TERRAINS ancientChamp;
 	public CommandeChoisirChampBataille(TERRAINS champ, Heroes heroes) {
 		this.heroes=heroes;
 		this.champ=champ;
@@ -17,8 +17,15 @@ public class CommandeChoisirChampBataille extends Commande {
 	}
 	@Override
 	public void executer() {
+		this.ancientChamp = this.heroes.getBataille().getBataille();
 		this.heroes.setBataille(new ChampDeBataille(this.champ));
 		VueWesnothForBattle.getInstance().afficherBataille(this.champ);
+		
+	}
+	@Override
+	public void annuler() {
+		VueWesnothForBattle.getInstance().afficherBataille(ancientChamp);
+		this.heroes.setBataille(new ChampDeBataille(ancientChamp));
 		
 	}
 

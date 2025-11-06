@@ -1,4 +1,6 @@
 package vue;
+import java.util.HashMap;
+
 import com.sun.media.jfxmedia.logging.Logger;
 
 import architecture.Vue;
@@ -15,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import modele.HEROES;
+import modele.HeroDeBataille;
 import modele.MONSTRES;
 import modele.TERRAINS;
 import vue.evenement.SelecteurDeBataille;
@@ -47,6 +50,23 @@ public class VueWesnothForBattle extends Vue {
 				controleur.notifierClicSauvegarder();
 				
 			}});
+		Button actionUndo = (Button)lookup("#action-undo");
+		actionUndo.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				controleur.notifierActionUndo();
+				
+			}});
+		Button actionRedo = (Button)lookup("#action-redo");
+		actionRedo.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				controleur.notifierActionRedo();
+				
+			}});
+		
 		
 		Button actionNomBatailleSauvegarde = (Button)lookup("#action-sauvegarder_nom_bataille");
 		actionNomBatailleSauvegarde.setOnAction(new EventHandler<ActionEvent>() {
@@ -178,6 +198,14 @@ public class VueWesnothForBattle extends Vue {
 		actionChoisirForest.setOnAction(new SelecteurDeBataille(controleur, TERRAINS.FORET));
 	}
 	
+	protected HashMap<String, ImageView> atlasCarteNouveauHero = new HashMap<String, ImageView>();
+	public void RetirerHero(HeroDeBataille nouveauHero, double x, double y) {
+		ImageView heroRetirer = atlasCarteNouveauHero.get(x + "-" + y);
+		AnchorPane contourVue = (AnchorPane)lookup("#jardin-cloture");
+		contourVue.getChildren().remove(heroRetirer);
+		
+	}
+	
 	public void PlacerChampHeroes(HEROES heroes, double x, double y) {
 		if(heroes == HEROES.DRAKAN) {
 			ImageView heroesPlacer = new ImageView(new Image("vue/decoration/heroes/drakan.png"));
@@ -188,6 +216,7 @@ public class VueWesnothForBattle extends Vue {
 			
 			AnchorPane clotureVue = (AnchorPane)lookup("#jardin-cloture");
 			clotureVue.getChildren().add(heroesPlacer);
+			atlasCarteNouveauHero.put(x+"-"+y, heroesPlacer);
 		}
 		else if(heroes == HEROES.DUELIST) {
 			ImageView heroesPlacer = new ImageView(new Image("vue/decoration/heroes/duelist.png"));
@@ -198,6 +227,7 @@ public class VueWesnothForBattle extends Vue {
 			
 			AnchorPane clotureVue = (AnchorPane)lookup("#jardin-cloture");
 			clotureVue.getChildren().add(heroesPlacer);
+			atlasCarteNouveauHero.put(x+"-"+y, heroesPlacer);
 		}
 		else if(heroes == HEROES.HEROELF) {
 			ImageView heroesPlacer = new ImageView(new Image("vue/decoration/heroes/heroElf.png"));
@@ -208,6 +238,7 @@ public class VueWesnothForBattle extends Vue {
 			
 			AnchorPane clotureVue = (AnchorPane)lookup("#jardin-cloture");
 			clotureVue.getChildren().add(heroesPlacer);
+			atlasCarteNouveauHero.put(x+"-"+y, heroesPlacer);
 		}
 		else if(heroes == HEROES.HUNTERONDIN) {
 			ImageView heroesPlacer = new ImageView(new Image("vue/decoration/heroes/hunterOndin.png"));
@@ -218,6 +249,7 @@ public class VueWesnothForBattle extends Vue {
 			
 			AnchorPane clotureVue = (AnchorPane)lookup("#jardin-cloture");
 			clotureVue.getChildren().add(heroesPlacer);
+			atlasCarteNouveauHero.put(x+"-"+y, heroesPlacer);
 		}
 		else if(heroes == HEROES.WARRIORDWARF) {
 			ImageView heroesPlacer = new ImageView(new Image("vue/decoration/heroes/warriorDwarf.png"));
@@ -228,6 +260,7 @@ public class VueWesnothForBattle extends Vue {
 			
 			AnchorPane clotureVue = (AnchorPane)lookup("#jardin-cloture");
 			clotureVue.getChildren().add(heroesPlacer);
+			atlasCarteNouveauHero.put(x+"-"+y, heroesPlacer);
 		}
 		else if(heroes == HEROES.WHITEMAGE) {
 			ImageView heroesPlacer = new ImageView(new Image("vue/decoration/heroes/whiteMage.png"));
@@ -238,6 +271,7 @@ public class VueWesnothForBattle extends Vue {
 			
 			AnchorPane clotureVue = (AnchorPane)lookup("#jardin-cloture");
 			clotureVue.getChildren().add(heroesPlacer);
+			atlasCarteNouveauHero.put(x+"-"+y, heroesPlacer);
 		}
 		
 		
@@ -329,5 +363,7 @@ public class VueWesnothForBattle extends Vue {
 		AnchorPane zone = (AnchorPane)lookup("#jardin-cloture");
 		zone.setStyle(css);
 		System.out.println(css);
+		
 	}
+	
 }

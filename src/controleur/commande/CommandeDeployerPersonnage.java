@@ -11,6 +11,7 @@ public class CommandeDeployerPersonnage extends Commande {
 	protected HeroDeBataille hero;
 	protected HEROES heroes;
 	protected Heroes heroList;
+	protected HeroDeBataille nouveauHero;
 	
 	public CommandeDeployerPersonnage(HEROES heroes, double x, double y,Heroes heroList) {
 		this.x =x;
@@ -21,10 +22,16 @@ public class CommandeDeployerPersonnage extends Commande {
 
 	@Override
 	public void executer() {
-		HeroDeBataille nouveauHero = new HeroDeBataille(this.heroes, x, y);
+		this.nouveauHero = new HeroDeBataille(this.heroes, x, y);
 		this.heroList.getHero().add(nouveauHero);
 		VueWesnothForBattle.getInstance().PlacerChampHeroes(this.heroes,x,y);
 		
+	}
+
+	@Override
+	public void annuler() {
+		VueWesnothForBattle.getInstance().RetirerHero(this.nouveauHero, x, y);
+		this.heroList.getHero().remove(nouveauHero);
 	}
 
 }
